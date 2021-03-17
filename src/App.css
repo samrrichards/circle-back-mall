@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+  height: 35px;
+}
+
+@media (max-width: 767px) {
+  .App h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 530px) {
+  .App h1 {
+    font-size: 18px;
+  }
+}
+
+.SvgBox {
+  width: 100%;
+  margin: auto;
+  display: block;
+  border: 2px lightgray solid;
+}
+
+#viewBox {
+  background-image: url("https://res.cloudinary.com/comixcloud/image/upload/v1579135069/circle-mall-background_caxxbq.png");
+  background-size: 100%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
