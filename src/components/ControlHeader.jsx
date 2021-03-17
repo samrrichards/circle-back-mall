@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useReducer } from 'react';
+import styled from 'styled-components';
 import { Button, Label } from 'react-bootstrap';
 import { groupBy } from 'lodash';
 
 import{ parseData, runSimulation, removeDots } from './utils';
 
 import sampleData from './data/sample_data.json';
-import './App.css';
 
 const initialState = {
   buttonText: 'Run Simulation',
@@ -37,9 +37,23 @@ const simReducer = (state, action) => {
     default:
       return state;
   }
+};
+
+const StyledHeader = styled.h1`
+  @media (max-width: 767px) {
+  & {
+    font-size: 24px;
+  }
 }
 
-const App = () => {
+@media (max-width: 530px) {
+  & {
+    font-size: 18px;
+  }
+}
+`;
+
+const ControlHeader = () => {
   const [state, dispatch] = useReducer(simReducer, initialState); 
 
   const { data, simRunning, startTime, endTime } = state;
@@ -87,35 +101,26 @@ const App = () => {
 
   const dateText = startTime === '12 AM'
         ? 'Sunday, April 8th, 2018'
-        : 'Saturday, April 7, 2018';
+        : 'Saturday, April 7th, 2018';
 
   return (
-    <div className='App'>
-      <h1>
-        {simRunning ? (
-          <Fragment>
-            <Label>{startTime}</Label> to{' '}
-            <Label>{endTime}</Label> on {dateText}
-          </Fragment>
-        ) : (
-          <Button 
-            bsStyle='primary' 
-            bsSize='large' 
-            onClick={handleClick}
-          >
-            Run Simulation
-          </Button>
-        )}
-      </h1>
-      <div id='viewBox'>
-        <svg
-          viewBox='0 0 1440 866'
-          xmlns='http://www.w3.org/2000/svg'
-          className='SvgBox'
-        />
-      </div>
-    </div>
+    <StyledHeader>
+      {simRunning ? (
+        <Fragment>
+          <Label>{startTime}</Label> to{' '}
+          <Label>{endTime}</Label> on {dateText}
+        </Fragment>
+      ) : (
+        <Button 
+          bsStyle='primary' 
+          bsSize='large' 
+          onClick={handleClick}
+        >
+          Run Simulation
+        </Button>
+      )}
+    </StyledHeader>
   );
 };
 
-export default App;
+export default ControlHeader;
