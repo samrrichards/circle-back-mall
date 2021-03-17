@@ -25,9 +25,6 @@ const simulateEntries = zone => {
 
   for (let i = 0; i < numDots; i++) {
     drawDot(zone.zone, i);
-  }
-
-  for (let i = 0; i < numDots; i++) {
     moveToCenter(zone.zone, i);
   }
 };
@@ -57,7 +54,9 @@ export const runSimulation = (data, cb) => {
   data = data.map(row => ({
     row,
     cb
-  }))
+  }));
+
   initVisuals(data[0]);
+
   data.forEach(simulateHourlyMovement);
 };
