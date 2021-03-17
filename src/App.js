@@ -2,9 +2,7 @@ import React, { Fragment, useEffect, useReducer } from 'react';
 import { Button, Label } from 'react-bootstrap';
 import { groupBy } from 'lodash';
 
-import { parseData } from './d3_controls/data_helpers.js';
-import { runSimulation } from './d3_controls/simulation_helpers.js';
-import { removeDots } from './d3_controls/movement_helpers.js';
+import{ parseData, runSimulation, removeDots } from './utils';
 
 import sampleData from './data/sample_data.json';
 import './App.css';

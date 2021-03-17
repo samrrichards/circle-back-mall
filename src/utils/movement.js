@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { uniqueId } from "lodash";
 
-import { getRandomInt } from './data_helpers.js';
+import { getRandomInt } from './data.js';
 
 const getXCoord = zone => {
   switch(zone){

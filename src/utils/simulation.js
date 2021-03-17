@@ -4,11 +4,11 @@ import { moveToCenter,
          switchClassToCenter,
          clearZone,
          drawDot
-       } from './movement_helpers.js';
+       } from './movement.js';
 
 import {  getInitialDots,
           getDotNumber
-        } from './data_helpers.js';
+        } from './data.js';
 
 const initVisuals = row => {
   const numDots = getInitialDots(row.row);
