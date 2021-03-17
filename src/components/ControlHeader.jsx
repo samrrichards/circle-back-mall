@@ -2,23 +2,37 @@ import React, { Fragment, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { Button, Label } from 'react-bootstrap';
 import { groupBy } from 'lodash';
+import { useQuery } from '@apollo/client';
 
-import{ parseData, runSimulation, removeDots } from './utils';
+import{ parseData, runSimulation, removeDots } from '../utils';
+import { GET_SAMPLE_DATA } from '../graphql/queries';
 
-import sampleData from './data/sample_data.json';
+const StyledHeader = styled.h1`
+  @media (max-width: 767px) {
+  & {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 530px) {
+  & {
+    font-size: 18px;
+  }
+}
+`;
 
 const initialState = {
   buttonText: 'Run Simulation',
   simRunning: false,
   startTime: '',
   endTime: '',
-  data: [],
+  simData: [],
 };
 
 const simReducer = (state, action) => {
   switch(action.type) {
     case 'load-data': 
-      return { ...state, data: action.data }; 
+      return { ...state, simData: action.simData }; 
     case 'update-time': 
       return { 
         ...state,
@@ -39,24 +53,11 @@ const simReducer = (state, action) => {
   }
 };
 
-const StyledHeader = styled.h1`
-  @media (max-width: 767px) {
-  & {
-    font-size: 24px;
-  }
-}
-
-@media (max-width: 530px) {
-  & {
-    font-size: 18px;
-  }
-}
-`;
-
 const ControlHeader = () => {
-  const [state, dispatch] = useReducer(simReducer, initialState); 
+  const [ state, dispatch ] = useReducer(simReducer, initialState); 
+  const { loading, error, data } = useQuery(GET_SAMPLE_DATA);
 
-  const { data, simRunning, startTime, endTime } = state;
+  const { simData, simRunning, startTime, endTime } = state;
 
   const updateTime = row => {
     const sliceTime = time => (time[0] === '0' ? time.slice(1) : time);
@@ -84,20 +85,22 @@ const ControlHeader = () => {
 
   const handleClick = () => {
     if (!simRunning) {
-      const simTime = 12500 * data.length;
-
-      runSimulation(data, updateTime);
+      runSimulation(simData, updateTime);
 
       dispatch({ type: 'run-simulation' })
 
-      setTimeout(endSimulation, simTime);
+      setTimeout(endSimulation, 12500 * simData.length);
     }
   };
 
   useEffect(() => {
-    const dataObj = groupBy(sampleData.map(parseData), 'parsedTime');
-    dispatch({type: 'load-data', data: Object.values(dataObj) });
-  }, []);
+    if (data && data.data) {
+      const dataObj = groupBy(data.data.map(parseData), 'startTime');
+
+      console.dir({ dataObj })
+      dispatch({type: 'load-data', simData: Object.values(dataObj) });
+    }
+  }, [ data ]);
 
   const dateText = startTime === '12 AM'
         ? 'Sunday, April 8th, 2018'
@@ -105,7 +108,11 @@ const ControlHeader = () => {
 
   return (
     <StyledHeader>
-      {simRunning ? (
+      {loading ? (
+        <Label>Waiting for data...</Label>
+      ) : error ? (
+        <Label>Error loading data. Try refreshing the page.</Label>
+      ) : simRunning ? (
         <Fragment>
           <Label>{startTime}</Label> to{' '}
           <Label>{endTime}</Label> on {dateText}
