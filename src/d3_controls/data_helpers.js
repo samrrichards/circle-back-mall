@@ -7,12 +7,9 @@ const parseStartTime = time => {
 };
 
 export const parseData = row => ({
-   startTime: row["Start Time"],
-   parsedTime: parseStartTime(row["Start Time"]),
-   zone: row["Zone"].split(" ").join(''),
-   entries: row["Footfall - Entries"],
-   exits: row["Footfall - Exits"],
-   occupancy: row["Footfall - Occupancy"]
+   ...row,
+   startTime: parseStartTime(row.startTime),
+   zone: row.zone.split(" ").join('')
 });
 
 const getTotalEntries = row => row.reduce((a, b) => a + b.entries, 0);
