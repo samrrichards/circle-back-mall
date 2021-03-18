@@ -61,6 +61,10 @@ const ControlHeader = () => {
 
   const { simData, simRunning, startTime, endTime } = state;
 
+  const dateText = startTime === '12 AM'
+  ? 'Sunday, April 8th, 2018'
+  : 'Saturday, April 7th, 2018';
+
   const updateTime = row => {
     const sliceTime = time => (time[0] === '0' ? time.slice(1) : time);
     const switchSuffix = suffix => (suffix === 'AM' ? 'PM' : 'AM');
@@ -81,17 +85,16 @@ const ControlHeader = () => {
   };
 
   const endSimulation = () => {
-    dispatch({ type: 'end-simulation' }); 
     removeDots(); 
+    dispatch({ type: 'end-simulation' }); 
   };
 
   const handleClick = () => {
     if (!simRunning) {
       runSimulation(simData, updateTime);
+      setTimeout(endSimulation, 12500 * simData.length);
 
       dispatch({ type: 'run-simulation' })
-
-      setTimeout(endSimulation, 12500 * simData.length);
     }
   };
 
@@ -101,10 +104,6 @@ const ControlHeader = () => {
       dispatch({type: 'load-data', simData: Object.values(dataObj) });
     }
   }, [ data ]);
-
-  const dateText = startTime === '12 AM'
-        ? 'Sunday, April 8th, 2018'
-        : 'Saturday, April 7th, 2018';
 
   return (
     <StyledHeader>
