@@ -1,3 +1,5 @@
 ## Circle Back Mall
 
-This is a genericized version of a simulation I built on contract for a machine learning company, which displays entrances and exists detected at a shopping mall over the course of a Saturday in 2018. I've updated the code to make it more in-line with contemporary React best-practices (including the hooks API, which hadn't been released yet when I built the simulation).
+This is a genericized version of a simulation I built on contract for a machine learning company, which displays entrances and exists detected at a shopping mall over the course of a Saturday in 2018. I've updated the code to make it more in-line with contemporary React best-practices (including the hooks API, which hadn't been released yet when I built the simulation). While I was making changes, I also went ahead and set up a GraphQL endpoint for the app to fetch data from (instead of loading data from a file included with the app).
+
+For security reasons, I'm storing the data endpoint's location as an environment variable (locally and on Heroku), which means that you won't be able to clone this repoository and run the app locally. If you want to see how it works, you can visit: https://circle-back-mall.herokuapp.com/. 
