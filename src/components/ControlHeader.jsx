@@ -8,6 +8,8 @@ import{ parseData, runSimulation, removeDots } from '../utils';
 import { GET_SAMPLE_DATA } from '../graphql/queries';
 
 const StyledHeader = styled.h1`
+  padding-bottom: 10px;
+
   @media (max-width: 767px) {
   & {
     font-size: 24px;
@@ -96,8 +98,6 @@ const ControlHeader = () => {
   useEffect(() => {
     if (data && data.data) {
       const dataObj = groupBy(data.data.map(parseData), 'startTime');
-
-      console.dir({ dataObj })
       dispatch({type: 'load-data', simData: Object.values(dataObj) });
     }
   }, [ data ]);
