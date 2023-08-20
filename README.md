@@ -6,5 +6,4 @@ The idea behind the simulation is that a "dot" represents 10 visitors (employees
 
 The simulation is controlled using React - you can view most of the control logic in `src/components/ControlHeader.jsx`. The dots are drawn and moved using D3.js - most of the code related to that is located in `src/utils/movement.js`. As mentioned above, the app runs on data that it's getting from a GraphQL endpoint. You can get a sense of what the sample data might look like by taking a look at `src/graphql/queries.js`.
 
-For security reasons, I'm storing the data endpoint's location as an environment variable (locally and on Heroku), so you won't be able to clone this repoository and run the app locally. If you want to see how it works, you can visit: https://circle-back-mall.herokuapp.com/. 
-
+For security reasons, I'm storing the data endpoint's location as an environment variable (locally and on Heroku), so you won't be able to clone this repoository and run the app locally. If you want to see how it works, you can visit: https://circle-back-mall.vercel.app/
